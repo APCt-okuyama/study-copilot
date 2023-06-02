@@ -1,0 +1,51 @@
+{
+    "count": 1,
+    "data": [
+        {
+            "app_temp": 23.7,
+            "aqi": 28,
+            "city_name": "Nagoya",
+            "clouds": 92,
+            "country_code": "JP",
+            "datetime": "2023-05-30:09",
+            "dewpt": 17,
+            "dhi": 52.57,
+            "dni": 472.62,
+            "elev_angle": 10.38,
+            "ghi": 129.63,
+            "gust": 2.6015625,
+            "h_angle": -90,
+            "lat": 35.1066,
+            "lon": 136.9749,
+            "ob_time": "2023-05-30 09:21",
+            "pod": "d",
+            "precip": 0,
+            "pres": 1005.5,
+            "rh": 67,
+            "slp": 1007.5,
+            "snow": 0,
+            "solar_rad": 51.5,
+            "sources": [
+                "analysis"
+            ],
+            "state_code": "01",
+            "station": "RJGG",
+            "sunrise": "19:40",
+            "sunset": "09:59",
+            "temp": 23.5,
+            "timezone": "Asia/Tokyo",
+            "ts": 1685438508,
+            "uv": 0.6672657,
+            "vis": 16,
+            "weather": {
+                "description": "Overcast clouds",
+                "code": 804,
+                "icon": "c04d"
+            },
+            "wind_cdir": "WSW",
+            "wind_cdir_full": "west-southwest",
+            "wind_dir": 249,
+            "wind_spd": 1.5909483
+        }
+    ]
+}

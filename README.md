@@ -1,6 +1,6 @@
-# study-copilot
+# Github Copilot Lab
 こんにちは。
-最近、Github Copilotを利用しはじめたのでブログにしておきます。
+
 
 ChatGPT
 ```
