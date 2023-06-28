@@ -71,18 +71,29 @@ export default class WeatherInfo extends Vue {
         return Math.floor(kelvin - 273.15);
     }
 
+    openweathermap_url = "https://api.openweathermap.org/data/2.5/weather";
 
-    getWeatherInfoOpenWeatherMapUsingAxios(){
-        console.log('getWeatherInfoOpenWeatherMapUsingAxios start.');
-        // 緯度・経度を取得する
+
+
+
+
+
+
+
+    getWeatherInfoOpenWeatherMapUsingAxios() {
+        // Get the latitude and longitude
         const lat = this.latitude;
         const lon = this.longitude;
-        // 緯度・経度が取得できない場合は処理を終了する
+
+        // If the latitude or longitude is zero, don't do anything
         if (lat === 0 || lon === 0) {
             return;
         }
-        // 緯度・経度から現在地の気象情報を取得する
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.VUE_APP_OPEN_WEATHER_MAP_API_KEY}`;
+
+        // Create the URL for the API call
+        const url = this.openweathermap_url + `?lat=${lat}&lon=${lon}&appid=${process.env.VUE_APP_OPEN_WEATHER_MAP_API_KEY}`;
+
+        // Make the API call
         axios.get(url)
             .then((response) => {
                 console.log(response);
@@ -91,9 +102,9 @@ export default class WeatherInfo extends Vue {
             });
     }
 
-    
 
-    
+
+
 
 
 
@@ -139,7 +150,7 @@ export default class WeatherInfo extends Vue {
             })
             .then((json) => {
                 this.weatherInfoWeatherbit = json.data[0];
-                console.log("weatherbit...");                
+                console.log("weatherbit...");
                 console.log(JSON.stringify(json));
             });
     }
@@ -162,7 +173,7 @@ export default class WeatherInfo extends Vue {
 
     // q: この関数は何をしているのか？
     // a: 現在日時を取得する
-    getTodayStringWithWeek(){
+    getTodayStringWithWeek() {
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth() + 1;
@@ -182,9 +193,7 @@ export default class WeatherInfo extends Vue {
                 this.longitude = position.coords.longitude;
                 console.log(`緯度: ${this.latitude}`);
                 console.log(`経度: ${this.longitude}`);
-                //this.getWeatherInfo_ByOpenWeatherMap();
                 this.getWeatherInfoOpenWeatherMapUsingAxios();
-                this.getWeatherInfo_ByWeatherbit();
             },
             (error) => {
                 console.log(error);
@@ -194,8 +203,8 @@ export default class WeatherInfo extends Vue {
 
 
 
-        
-    
+
+
 
 
 
