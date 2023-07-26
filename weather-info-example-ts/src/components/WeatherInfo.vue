@@ -56,6 +56,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
+import { WeatherResponse } from '@/types/response';
 
 @Component
 export default class WeatherInfo extends Vue {
@@ -64,7 +65,7 @@ export default class WeatherInfo extends Vue {
     // 経度
     longitude = 0;
     // 現在地の気象情報
-    weatherInfo: any = null;
+    weatherInfo: WeatherResponse | null = null;
     weatherInfoWeatherbit: any = null;
 
     convertKelvinToCelsius(kelvin: number) {
@@ -73,35 +74,44 @@ export default class WeatherInfo extends Vue {
 
     openweathermap_url = "https://api.openweathermap.org/data/2.5/weather";
 
+    async getWeatherInfoOpenWeatherMapUsingAxios() {
+        // Get latitude and longitude from the browser
+        const latitude = this.latitude;
+        const longitude = this.longitude;
 
-
-
-
-
-
-
-    getWeatherInfoOpenWeatherMapUsingAxios() {
-        // Get the latitude and longitude
-        const lat = this.latitude;
-        const lon = this.longitude;
-
-        // If the latitude or longitude is zero, don't do anything
-        if (lat === 0 || lon === 0) {
+        // Check if latitude or longitude is 0
+        if (latitude === 0 || longitude === 0) {
+            console.log('Latitude or Longitude is 0');
             return;
         }
 
-        // Create the URL for the API call
-        const url = this.openweathermap_url + `?lat=${lat}&lon=${lon}&appid=${process.env.VUE_APP_OPEN_WEATHER_MAP_API_KEY}`;
+        try {
+            // Construct the url
+            const url = this.openweathermap_url +
+                `?lat=${latitude}&lon=${longitude}&appid=${process.env.VUE_APP_OPEN_WEATHER_MAP_API_KEY}`;
 
-        // Make the API call
-        axios.get(url)
-            .then((response) => {
-                console.log(response);
+            // Get the weather data from the weather API
+            const response = await axios.get<WeatherResponse>(url);
+
+            // Check if the response status is not 200
+            if (response.status !== 200) {
+                console.log('Response status is not 200');
+                return;
+            }
+
+            // Check if data is available
+            if (response.data) {
                 this.weatherInfo = response.data;
-                console.log(JSON.stringify(this.weatherInfo));
-            });
+            }
+            else {
+                console.log('Response data is not available');
+            }
+        }
+        // Catch errors
+        catch (error) {
+            console.log('Error: ' + error);
+        }
     }
-
 
 
 
@@ -171,8 +181,7 @@ export default class WeatherInfo extends Vue {
         this.getLocation();
     }
 
-    // q: この関数は何をしているのか？
-    // a: 現在日時を取得する
+
     getTodayStringWithWeek() {
         const today = new Date();
         const year = today.getFullYear();
@@ -200,18 +209,6 @@ export default class WeatherInfo extends Vue {
             }
         );
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 </script>
